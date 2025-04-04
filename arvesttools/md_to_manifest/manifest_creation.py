@@ -64,7 +64,7 @@ def md_to_manifest(markdown_folder, manifest_folder, mail, password) :
             anno_page.add_item(anno)
             canvas.add_item(anno_page)
 
-    #Export manifest en .json 
+        #Export manifest en .json 
 
         nom_manifest = f"manifest_essai{num_fichier}.json"
         manifest_path = os.path.join(manifest_folder, nom_manifest)
