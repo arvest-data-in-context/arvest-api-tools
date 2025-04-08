@@ -1,1 +1,2 @@
 from .create_manifest import media_to_manifest
+from .annotations import add_textual_annotation
