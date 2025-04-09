@@ -1,2 +1,2 @@
-from .create_manifest import media_to_manifest
+from .create_manifest import media_to_manifest, media_to_canvas, media_to_canvas_local_file
 from .annotations import add_textual_annotation
