@@ -2,6 +2,7 @@
 TODO:
 - Tetras seems to force youtube manifests to be 2654.8672566371683 * 1500
 - Local file manifests have no thumbnails
+- MAke the append to canvas recursive
 
 this whole scirpt is fucking heinous needs a refactor
 """
@@ -77,10 +78,29 @@ def _media_to_manifest_local_file(local_file, **kwargs) -> iiif_prezi3.Manifest:
 def append_canvas_to_manifest(manifest, canvas):
     index = len(manifest.items) + 1
 
-    canvas.id = canvas.id.replace("&&CANVAS-INDEX", str(index))
-    canvas.items[0].id = canvas.items[0].id.replace("&&CANVAS-INDEX", str(index))
-    canvas.items[0].items[0].id = canvas.items[0].items[0].id.replace("&&CANVAS-INDEX", str(index))
-    
+    "https://placeholder.com/canvas/&&CANVAS-INDEX/page/1/1"
+
+
+    if "&&CANVAS-INDEX" in canvas.id:
+        canvas.id = canvas.id.replace("&&CANVAS-INDEX", str(index))
+        canvas.items[0].id = canvas.items[0].id.replace("&&CANVAS-INDEX", str(index))
+        canvas.items[0].items[0].id = canvas.items[0].items[0].id.replace("&&CANVAS-INDEX", str(index))
+        canvas.items[0].items[0].target = canvas.items[0].items[0].target.replace("&&CANVAS-INDEX", str(index))
+    elif "https://placeholder.com/canvas/" in canvas.id:
+        # original_id = canvas.id
+        original_ap_id = canvas.items[0].id
+        # original_annotation_id = canvas.items[0].items[0].id
+        # original_annotation_target = canvas.items[0].items[0].target
+
+        original_index = original_ap_id.split("https://placeholder.com/canvas/")[1].split("/")[0]
+        replace_string = f"https://placeholder.com/canvas/{original_index}"
+        replace_new = f"https://placeholder.com/canvas/{index}"
+
+        canvas.id = canvas.id.replace(replace_string, replace_new)
+        canvas.items[0].id = canvas.items[0].id.replace(replace_string, replace_new)
+        canvas.items[0].items[0].id = canvas.items[0].items[0].id.replace(replace_string, replace_new)
+        canvas.items[0].items[0].target = canvas.items[0].items[0].target.replace(replace_string, replace_new)
+
     manifest.items.append(canvas)
 
     return manifest
