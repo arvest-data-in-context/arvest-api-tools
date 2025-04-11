@@ -1,1 +1,1 @@
-from .manifest_creation import md_to_manifest
+from .manifest_creation import md_to_manifest, metadata_update

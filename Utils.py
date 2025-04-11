@@ -29,7 +29,7 @@ def recuperation(debut, fin, chemin):
     csv_read = csv.reader(f)
     for ligne in csv_read: 
         num_recolte = num_recolte + 1
-        if num_recolte > numdebut and num_recolte < numfin:
+        if num_recolte > numdebut and num_recolte < numfin-1:
             ma_liste.append(ligne)
     f.close()
 
@@ -96,3 +96,6 @@ def extraction_metadonne(target, recuperation):
         wa = liste.index(target) + 1
         resultat = liste[int(f"{wa}")]
   return resultat
+
+
+# Fabricateur de markdown
